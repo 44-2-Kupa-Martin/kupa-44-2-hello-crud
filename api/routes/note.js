@@ -1,6 +1,7 @@
 const express= require(`express`);
 const router= express.Router();
 const Note= require(`../models/Note`);
+const PORT= require(`../../index`);
 //routes
 
 //req all notes

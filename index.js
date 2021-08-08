@@ -5,6 +5,7 @@ const cors= require(`cors`);
 //env var
 const DB= process.env.MONGODB_URI || `mongodb://localhost/notes`;
 const PORT= process.env.PORT || 3000;
+module.exports= PORT;
 //obj constructor
 const app= express();
 //connect to db
