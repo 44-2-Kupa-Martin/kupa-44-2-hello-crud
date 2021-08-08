@@ -15,9 +15,7 @@ mongoose.connect(DB, {useNewUrlParser: true})
     .then(() => console.log(`Connected to DB ${DB}`))
     .catch( err => console.error(`Error: ${err}`))
 //middlewares
-app.use(express.json());
-app.use(morgan(`dev`));
-app.use(cors())
+app.use(express.json(), morgan(`dev`), cors());
 app.use(`/api`, require(`./api/routes/note`));
 //error handling
 app.use((req, res, next) => {
