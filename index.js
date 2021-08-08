@@ -1,6 +1,5 @@
 const express= require(`express`);
 const mongoose= require(`mongoose`);
-const morgan= require(`morgan`);
 const cors= require(`cors`);
 //env var
 const DB= process.env.MONGODB_URI || `mongodb://localhost/notes`;
@@ -15,7 +14,7 @@ mongoose.connect(DB, {useNewUrlParser: true})
     .then(() => console.log(`Connected to DB ${DB}`))
     .catch( err => console.error(`Error: ${err}`))
 //middlewares
-app.use(express.json(), morgan(`dev`), cors());
+app.use(express.json(), cors());
 app.use(`/api`, require(`./api/routes/note`));
 //error handling
 app.use((req, res, next) => {
