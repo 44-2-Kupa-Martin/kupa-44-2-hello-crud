@@ -13,7 +13,6 @@ router.get(`/notes`, (req, res, next) => {
                 method: `GET`,
                 url: `${req.protocol}://${req.hostname}:${PORT}/api/notes/${note._id}`
             }
-            delete note._id;
         }
         res.status(200).json({
             count: notes.length,
@@ -38,8 +37,7 @@ router.post(`/notes`, (req, res, next) => {
 });
 //req a specific note
 router.get('/notes/:id', (req, res, next) => {
-    Note.findById(req.params.id)
-      .select('title text creationDate updateDate')
+    Note.findById(req.params.id, 'title text creationDate updateDate')
       .exec((err, note) => {
         if (err) return next(err);
         if (!note) return res.status(404).json({msg: `Not found`});
@@ -69,10 +67,9 @@ router.put('/notes/:id', (req, res, next) => {
       new: true,
       omitUndefined: true
     };
-    Note.findByIdAndUpdate(req.params.id, note, options).exec((err, note) => {
+    Note.findByIdAndUpdate(req.params.id, note, options).select(`-__v`).exec((err, note) => {
       if (err) return next(err);
       if (!note) return res.status(404).json({msg: `Not found`});
-      delete note.__v;
       res.status(200).json(note);
     });
   });
